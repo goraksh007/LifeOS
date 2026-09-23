@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LifeOS - Student Command Center</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         LOGIN / REGISTER SCREEN
+    ========================== -->
+
+    <div id="authScreen">
+
+        <div class="auth-card">
+
+            <h1>LifeOS</h1>
+
+            <p>Smart Student Command Center</p>
+
+
+            <!-- LOGIN -->
+
+            <div id="loginBox">
+
+                <h2>🔐 Login</h2>
+
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Username"
+                >
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Password"
+                >
+
+                <button
+                    type="button"
+                    onclick="loginUser()"
+                >
+                    Login
+                </button>
+
+                <p id="loginMessage"></p>
+
+                <p>
+                    Don't have an account?
+
+                    <button
+                        type="button"
+                        onclick="showRegister()"
+                    >
+                        Register
+                    </button>
+                </p>
+
+            </div>
+
+
+            <!-- REGISTER -->
+
+            <div
+                id="registerBox"
+                style="display: none;"
+            >
+
+                <h2>📝 Register</h2>
+
+                <input
+                    type="text"
+                    id="registerUsername"
+                    placeholder="Choose username"
+                >
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Choose password"
+                >
+
+                <button
+                    type="button"
+                    onclick="registerUser()"
+                >
+                    Create Account
+                </button>
+
+                <p id="registerMessage"></p>
+
+                <p>
+                    Already have an account?
+
+                    <button
+                        type="button"
+                        onclick="showLogin()"
+                    >
+                        Login
+                    </button>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN LIFEOS APPLICATION
+    ========================== -->
+
+    <div
+        id="app"
+        style="display: none;"
+    >
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header>
+
+            <div>
+
+                <h1>LifeOS</h1>
+
+                <p id="welcomeMessage">
+                    Smart Student Command Center
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="logoutUser()"
+            >
+                🚪 Logout
+            </button>
+
+        </header>
+
+
+        <!-- =========================
+             NAVIGATION
+        ========================== -->
+
+        <nav>
+
+            <button
+                type="button"
+                onclick="showSection('dashboard')"
+            >
+                🏠 Dashboard
+            </button>
+
+            <button
+                type="button"
+                onclick="showSection('tasks')"
+            >
+                ✅ Tasks
+            </button>
+
+            <button
+                type="button"
+                onclick="showSection('attendance')"
+            >
+                📚 Attendance
+            </button>
+
+            <button
+                type="button"
+                onclick="showSection('study')"
+            >
+                ⏱️ Study
+            </button>
+
+            <button
+                type="button"
+                onclick="showSection('expenses')"
+            >
+                💰 Expenses
+            </button>
+
+            <button
+                type="button"
+                onclick="showSection('analytics')"
+            >
+                📊 Analytics
+            </button>
+
+        </nav>
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section
+            id="dashboard"
+            class="section"
+        >
+
+            <h2>📊 LifeOS Dashboard</h2>
+
+
+            <div class="dashboard-grid">
+
+
+                <!-- TASK CARD -->
+
+                <div class="dashboard-card">
+
+                    <h3>✅ Completed Tasks</h3>
+
+                    <h2 id="dashboardTasks">
+                        0
+                    </h2>
+
+                    <p>
+                        Tasks completed
+                    </p>
+
+                </div>
+
+
+                <!-- ATTENDANCE CARD -->
+
+                <div class="dashboard-card">
+
+                    <h3>📚 Attendance</h3>
+
+                    <h2 id="dashboardAttendance">
+                        0%
+                    </h2>
+
+                    <p>
+                        Average attendance
+                    </p>
+
+                </div>
+
+
+                <!-- EXPENSE CARD -->
+
+                <div class="dashboard-card">
+
+                    <h3>💰 Expenses</h3>
+
+                    <h2 id="dashboardExpense">
+                        ₹0
+                    </h2>
+
+                    <p>
+                        Total recorded expenses
+                    </p>
+
+                </div>
+
+
+                <!-- STUDY CARD -->
+
+                <div class="dashboard-card">
+
+                    <h3>⏱️ Study Timer</h3>
+
+                    <h2 id="dashboardStudy">
+                        25:00
+                    </h2>
+
+                    <p>
+                        Current study session
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SMART RECOMMENDATION -->
+
+            <div class="dashboard-card recommendation-card">
+
+                <h3>
+                    🤖 Smart Recommendation
+                </h3>
+
+                <p id="recommendation">
+                    Click the button to get a recommendation.
+                </p>
+
+                <button
+                    type="button"
+                    onclick="generateRecommendation()"
+                >
+                    Get Recommendation
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TASK MANAGER
+        ========================== -->
+
+        <section
+            id="tasks"
+            class="section"
+            style="display: none;"
+        >
+
+            <h2>
+                ✅ Task Manager
+            </h2>
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a task"
+            >
+
+            <button
+                type="button"
+                onclick="addTask()"
+            >
+                Add Task
+            </button>
+
+            <ul id="taskList"></ul>
+
+        </section>
+
+
+        <!-- =========================
+             ATTENDANCE TRACKER
+        ========================== -->
+
+        <section
+            id="attendance"
+            class="section"
+            style="display: none;"
+        >
+
+            <h2>
+                📚 Attendance Tracker
+            </h2>
+
+            <input
+                type="text"
+                id="subjectInput"
+                placeholder="Subject"
+            >
+
+            <input
+                type="number"
+                id="totalClassesInput"
+                placeholder="Total Classes"
+                min="1"
+            >
+
+            <input
+                type="number"
+                id="attendedClassesInput"
+                placeholder="Attended Classes"
+                min="0"
+            >
+
+            <button
+                type="button"
+                onclick="addAttendance()"
+            >
+                Add Attendance
+            </button>
+
+            <div id="attendanceList"></div>
+
+        </section>
+
+
+        <!-- =========================
+             STUDY TIMER
+        ========================== -->
+
+        <section
+            id="study"
+            class="section"
+            style="display: none;"
+        >
+
+            <h2>
+                ⏱️ Study Timer
+            </h2>
+
+            <h1 id="timer">
+                25:00
+            </h1>
+
+            <button
+                type="button"
+                onclick="startTimer()"
+            >
+                ▶ Start
+            </button>
+
+            <button
+                type="button"
+                onclick="stopTimer()"
+            >
+                ⏸ Stop
+            </button>
+
+            <button
+                type="button"
+                onclick="resetTimer()"
+            >
+                🔄 Reset
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             EXPENSE TRACKER
+        ========================== -->
+
+        <section
+            id="expenses"
+            class="section"
+            style="display: none;"
+        >
+
+            <h2>
+                💰 Expense Tracker
+            </h2>
+
+            <input
+                type="text"
+                id="expenseTitleInput"
+                placeholder="Expense title"
+            >
+
+            <input
+                type="number"
+                id="expenseInput"
+                placeholder="Enter amount"
+                min="1"
+            >
+
+            <button
+                type="button"
+                onclick="addExpense()"
+            >
+                Add Expense
+            </button>
+
+
+            <h3>
+                Total Expense
+            </h3>
+
+            <h2 id="totalExpense">
+                ₹0
+            </h2>
+
+            <div id="expenseList"></div>
+
+        </section>
+
+
+        <!-- =========================
+             ANALYTICS
+        ========================== -->
+
+        <section
+            id="analytics"
+            class="section"
+            style="display: none;"
+        >
+
+            <h2>
+                📊 LifeOS Analytics
+            </h2>
+
+
+            <!-- TASK CHART -->
+
+            <div class="dashboard-card">
+
+                <h3>
+                    ✅ Task Completion
+                </h3>
+
+                <canvas
+                    id="taskChart"
+                ></canvas>
+
+            </div>
+
+
+            <!-- ATTENDANCE CHART -->
+
+            <div class="dashboard-card">
+
+                <h3>
+                    📚 Attendance Overview
+                </h3>
+
+                <canvas
+                    id="attendanceChart"
+                ></canvas>
+
+            </div>
+
+
+            <!-- EXPENSE CHART -->
+
+            <div class="dashboard-card">
+
+                <h3>
+                    💰 Expense Breakdown
+                </h3>
+
+                <canvas
+                    id="expenseChart"
+                ></canvas>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="./script.js"></script>
+
+</body>
+
+</html>

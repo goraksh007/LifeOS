@@ -1,0 +1,24 @@
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+*.env
+
+# Logs
+*.log
+
+# Java / Maven
+target/
+*.class
+
+# Local configuration
+application-local.properties
+# Backend database credentials
+backend/src/main/resources/application.properties
