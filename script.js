@@ -2,7 +2,7 @@
 // LIFEOS - SCRIPT.JS
 // ===============================
 
-const API_BASE = "http://localhost:8080";
+const API_BASE = "https://lifeos-backend-vqcp.onrender.com";
 
 let tasks = [];
 let attendanceRecords = [];
