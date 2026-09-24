@@ -21,7 +21,8 @@ import com.lifeos.repository.UserRepository;
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins = {
         "http://127.0.0.1:5500",
-        "http://localhost:5500"
+        "http://localhost:5500",
+        "https://lifeos-02wf.onrender.com"
 })
 public class TaskController {
 
@@ -34,7 +35,6 @@ public class TaskController {
         this.userRepository = userRepository;
     }
 
-    // GET all tasks for a specific user
     @GetMapping("/{username}")
     public List<Task> getTasks(@PathVariable String username) {
 
@@ -51,7 +51,6 @@ public class TaskController {
                 .toList();
     }
 
-    // CREATE task for a specific user
     @PostMapping("/{username}")
     public Task createTask(@PathVariable String username,
                            @RequestBody Task task) {
@@ -67,7 +66,6 @@ public class TaskController {
         return taskRepository.save(task);
     }
 
-    // UPDATE task only if it belongs to the user
     @PutMapping("/{username}/{id}")
     public Task updateTask(@PathVariable String username,
                            @PathVariable Long id,
@@ -93,10 +91,9 @@ public class TaskController {
         return taskRepository.save(existingTask);
     }
 
-    // DELETE task only if it belongs to the user
     @DeleteMapping("/{username}/{id}")
     public void deleteTask(@PathVariable String username,
-                            @PathVariable Long id) {
+                           @PathVariable Long id) {
 
         User user = userRepository.findAll()
                 .stream()
